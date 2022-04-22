@@ -1,4 +1,71 @@
-# RAPL-formula
+# RAPL-formula (written by Tan Ying)
+
+# Activate conda env
+```
+conda activate rapl
+```
+
+# Install (if not)
+Install rapl
+```
+pip install rapl-formula
+```
+Install mongodb
+```
+sudo apt install mongodb-server-core
+```
+Install pymongo
+```
+pip install pymongo
+```
+# Start hwpc-sensor
+Start mongodb server
+```
+mongod --dbpath /var/lib/mongo --logpath /var/log/mongodb/mongod.log --fork 
+```
+Write the configuration file for hwpc-sensor
+```
+vim /ty/config_file.json 
+```
+Start the hwpc-sensor
+```
+cd ty
+```
+```
+sudo docker run --rm --net=host --privileged --pid=host -v /sys:/sys -v /var/lib/docker/containers:/var/lib/docker/containers:ro -v /tmp/powerapi-sensor-reporting:/reporting -v $(pwd):/srv -v $(pwd)/config_file.json:/config_file.json powerapi/hwpc-sensor --config-file /config_file.json
+```
+
+# Start RAPL-formula
+Write the configuration file for RAPL-formula
+```
+vim /ty/config_file_rapl.json
+```
+Start RAPL-formula
+```
+python -m rapl_formula --config-file config_file_rapl.json
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# RAPL-formula (original)
 
 A [powerAPI](https://github.com/powerapi-ng/powerapi) formula using RAPL
 counters to provides power consumption information of each socket of the
